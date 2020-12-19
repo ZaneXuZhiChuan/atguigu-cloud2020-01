@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 而 @DefaultProperties 注解寓意就是如果没有在函数中通过@HystrixCommand去指明fallbackmethond逻辑的话，
 就默认使用 @DefaultProperties 的逻辑；
  */
-@DefaultProperties()
+@DefaultProperties(defaultFallback = "payment_global_fallbackMethod")
 public class OrderHystrixController {
 
     @Autowired
@@ -37,9 +37,9 @@ public class OrderHystrixController {
     /*
     客户端对远程响应的要求是希望远端能够在 1.5s 内返回结果，如果没有满足则触发 Hystrix 的 fallback逻辑；
      */
-    @HystrixCommand(fallbackMethod = "paymentInfo_TimeOut_Fallback", commandProperties = {
+    @HystrixCommand/*(fallbackMethod = "paymentInfo_TimeOut_Fallback", commandProperties = {
             @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value = "1500")
-    })
+    })*/
     public String paymentInfo_TimeOut(@PathVariable("id") Integer id) {
         String result = paymentHystrixService.paymentInfo_TimeOut(id);
         return result;
@@ -47,5 +47,12 @@ public class OrderHystrixController {
 
     public String paymentInfo_TimeOut_Fallback(Integer id){
         return "。".repeat(15) + "客户端80，支付超时或者系统繁忙。。。。。";
+    }
+
+    /*
+    下面走的是全局 fallbackmethod 逻辑
+     */
+    public String payment_global_fallbackMethod(){
+        return "。".repeat(15) +  "全局的异常处理信息，请稍后再试";
     }
 }
