@@ -1,6 +1,7 @@
 package com.atguigu.springcloud.controller;
 
 import com.atguigu.springcloud.service.PaymentHystrixService;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
+/*
+我们客户端在与远端进行交互的时候，对于服务过程中可能会出现的各种熔断、降级在很多函数逻辑中都是要进行处理的，
+而且大多数情况下处理的逻辑其实都是大同小异，所以对于我们在函数中涉及到的 hystrix 的 fallbackmethond 逻辑
+我们应该抽取一个统一的 fallbcak 逻辑出来供整个业务使用，避免代码冗余；
+
+而 @DefaultProperties 注解寓意就是如果没有在函数中通过@HystrixCommand去指明fallbackmethond逻辑的话，
+就默认使用 @DefaultProperties 的逻辑；
+ */
+@DefaultProperties()
 public class OrderHystrixController {
 
     @Autowired
@@ -35,7 +45,7 @@ public class OrderHystrixController {
         return result;
     }
 
-    public String paymentInfo_TimeOutHandler(Integer id){
+    public String paymentInfo_TimeOut_Fallback(Integer id){
         return "。".repeat(15) + "客户端80，支付超时或者系统繁忙。。。。。";
     }
 }

@@ -12,6 +12,11 @@ eureka:
     service-url:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
 
+# 客户端和服务端都可以用 hystrix 进行服务熔断等操作，但是在客户端需要加上以下配置，让 hystrix 生效
+feign:
+  hystrix:
+    enabled: true
+
 ribbon:
   ReadTimeout: 5000
   ConnectTimeout: 5000
