@@ -28,12 +28,13 @@ public class PaymentController {
     @Autowired
     DiscoveryClient discoveryClient;
 
-    @PostMapping("/payment/create")
+
     /*
     注意：当Order模块来调用当前模块create服务的时候，
     由于Payment模块的create服务是post请求，而Order模块是通过get请求访问过来的，
     所以要记得给Payment模块中的create服务参数加上@RequestBody注解
      */
+    @PostMapping("/payment/create")
     public CommonResult create(@RequestBody Payment payment) {
         int res = paymentService.create(payment);
         log.info("********CREATE..." + port + ": " + res);
