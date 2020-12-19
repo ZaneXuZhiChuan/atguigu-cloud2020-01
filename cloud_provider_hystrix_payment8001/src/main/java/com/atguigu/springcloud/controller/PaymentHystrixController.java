@@ -18,17 +18,26 @@ public class PaymentHystrixController {
     @Value("${server.port}")
     String port;
 
+    // 服务降级 =============================================================================================================
     @GetMapping("/payment/hystrix/ok/{id}")
-    public String paymentInfo_ok(@PathVariable("id") Integer id){
+    public String paymentInfo_ok(@PathVariable("id") Integer id) {
         String result = paymentHystrixService.paymentInfo_OK(id);
-        log.info("Result: "+result);
+        log.info("Result: " + result);
         return result;
     }
 
     @GetMapping("/payment/hystrix/timeout/{id}")
-    public String paymentInfo_TimeOut(@PathVariable("id") Integer id){
+    public String paymentInfo_TimeOut(@PathVariable("id") Integer id) {
         String result = paymentHystrixService.paymentInfo_TimeOut(id);
-        log.info("Result: "+result);
+        log.info("Result: " + result);
+        return result;
+    }
+
+    // 服务熔断 =============================================================================================================
+     @GetMapping("/payment/circuitbreaker/{id}")
+    public String paymentCircuitBreaker(@PathVariable("id") Integer id) {
+        String result = paymentHystrixService.paymentCircuitBreaker(id);
+        log.info("1".repeat(15) + "Result: " + result);
         return result;
     }
 }
