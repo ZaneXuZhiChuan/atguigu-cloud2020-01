@@ -6,19 +6,27 @@ spring:
     name: cloud-gateway
   cloud:
     gateway:
+# 开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      discovery:
+        locator:
+          enabled: true
       routes:
-#        路由的ID名，没有固定规则的要求，但推荐最好和服务名称一致
+# 1.=========================================
+# 路由的ID名，没有固定规则的要求，但推荐最好和服务名称一致
         - id: payment_route1
-#          需要进行匹配并提供服务的路由地址
-          uri: http://localhost:8001
+# uri: http://localhost:8001
+# 需要进行匹配并提供服务的路由地址，其中 lb 代表loadbalanced，是 “负载均衡” 的意思,
+# 所以在gateway中将 uri 地址由 “写死” 更改成 在 注册中心 中注册的名称，
+# 让gateway去注册中心动态获取地址，这样对于做了 “集群” 的微服务应用就可以让 gateway 去动态获取服务的路由地址
+          uri: lb://CLOUD-PAYMENT-SERVICE
           predicates:
-#         断言，满足该断言规则的则进行路由
+# 断言，满足该断言规则的则进行路由
             - Path=/payment/get/**
-
+# 2. ========================
         - id: payment_route2
-          uri: http://localhost:8001
+          uri: lb://CLOUD-PAYMENT-SERVICE
           predicates:
-            - Path=/payment/create/**
+            - Path=/payment/discovery/**
 
 
 eureka:

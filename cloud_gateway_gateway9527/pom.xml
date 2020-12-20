@@ -39,6 +39,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--        引入自定义抽取出来的api通用包，可以使用Payment 等一些分布式模块总公共资源-->
+        <dependency>
+            <groupId>com.atguigu.springcloud</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--        eureka 客户端-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
