@@ -1,5 +1,5 @@
 server:
-  port: 3355
+  port: 3366
 
 spring:
   application:
@@ -13,7 +13,7 @@ spring:
       name: config # 配置文件名称
       profile: dev # 读取后缀名称 上诉三个综合：master分支上 config-dev.yml 的配置文件被读取；
       uri: http://config-3344.com:3344 # 配置中心地址
-    # 增加rabbitmq配置，主要是为了引入 bus 总线功能
+# 增加rabbitmq配置，主要是为了引入 bus 总线功能
   rabbitmq:
     host: localhost
     port: 5672
@@ -30,7 +30,7 @@ eureka:
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
   instance:
     #    自定义EurekaServer端显示当前应用的名称
-    instance-id: cloud-config-client3355
+    instance-id: cloud-config-client3366
     #    将鼠标放置到EurekaServer网页端的注册节点时候会显示当前应用的IP地址信息
     prefer-ip-address: true
 

@@ -12,6 +12,12 @@
     <artifactId>cloud_config_client_3355</artifactId>
 
     <dependencies>
+        <!-- bus 总线，主要用来做精准配置更新 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+            <version>2.0.0.RELEASE</version>
+        </dependency>
         <!--监控:用来实现 config 配置信息动态更新的，这个功能模块要配合spring-boot-starter-web一起使用-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
