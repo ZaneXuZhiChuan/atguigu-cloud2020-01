@@ -27,3 +27,10 @@ eureka:
     instance-id: cloud-config-client
     #    将鼠标放置到EurekaServer网页端的注册节点时候会显示当前应用的IP地址信息
     prefer-ip-address: true
+
+# 暴露监控端点，config client配置监控远端 config-*.yml 信息然后动态更新
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
