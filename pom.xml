@@ -28,6 +28,8 @@
         <module>cloud_config_center3344</module>
         <module>cloud_config_client_3355</module>
         <module>cloud_config_client_3366</module>
+        <module>cloud_alibaba_provider_payment9001</module>
+        <module>cloud_alibaba_provider_payment9002</module>
     </modules>
 
     <!--统一管理jar包版本-->
