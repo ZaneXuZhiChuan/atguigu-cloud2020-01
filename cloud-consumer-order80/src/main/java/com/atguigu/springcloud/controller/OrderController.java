@@ -43,4 +43,13 @@ public class OrderController {
             return new CommonResult<>(404,"操作错误");
         }
     }
+
+    /*
+    TODO Zipkin的jar包下不下来 Zipkin + sleuth 检测链路
+     */
+    /*@GetMapping("/consumer/payment/zipkin")
+    public String paymentZipkin(){
+        String result = restTemplate.getForObject(PAYMENT_URL + "/payment/zipkin/", String.class);
+        return result;
+    }*/
 }

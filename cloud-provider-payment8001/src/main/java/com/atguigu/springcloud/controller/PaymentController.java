@@ -70,4 +70,12 @@ public class PaymentController {
         serviceInstance.getPort()+ "|".repeat(5)+serviceInstance.getUri()));*/
         return this.discoveryClient;
     }
+
+    /*
+    TODO Zipkin的jar包下不下来 Zipkin + sleuth 检测链路
+     */
+    /*@GetMapping("/payment/zipkin")
+    public String paymentZipkin(){
+        return "Zipkin链路层测试 test.....................";
+    }*/
 }

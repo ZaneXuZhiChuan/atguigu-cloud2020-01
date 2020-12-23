@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: cloud-consumer-order
+# TODO zipkin server jar包一直下不下来
+#  zipkin:
+#    base-url: http://localhost:9411
+#  sleuth:
+#    sampler:
+#      # 采样率值介于 0 到 1 之间，1 则表示全部采样
+#      probability: 1
 
 eureka:
   client:
