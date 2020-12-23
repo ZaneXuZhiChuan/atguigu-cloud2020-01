@@ -1,0 +1,23 @@
+server:
+  port: 83
+
+spring:
+  application:
+    name: cloud-nacos-consumer-order
+  datasource:
+    # 当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    # mysql驱动类
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.77.132:33306/atguigu_cloud2020?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+# 消费者将要去访问的微服务名称
+service-url:
+  nacos-user-service: http://cloud-nacos-payment-service
+
