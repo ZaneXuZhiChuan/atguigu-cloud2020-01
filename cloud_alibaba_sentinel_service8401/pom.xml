@@ -12,7 +12,6 @@
     <artifactId>cloud_alibaba_sentinel_service8401</artifactId>
 
     <dependencies>
-
         <!--        openfeign 用来替代RestTemplate + Ribbon来实现RCP调用功能的模块-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
