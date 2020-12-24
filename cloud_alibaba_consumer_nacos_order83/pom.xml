@@ -12,6 +12,23 @@
     <artifactId>cloud_alibaba_consumer_nacos_order83</artifactId>
 
     <dependencies>
+        <!--        openfeign 用来替代RestTemplate + Ribbon来实现RCP调用功能的模块-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- 后续作持久化功能的模块 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+            <version>1.8.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!--        Sentinel 用来替代hystrix模块功能实现服务限流、降级、熔断等功能的模块-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
         <!--        nacos:用来替代eruka做服务注册和发现-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
