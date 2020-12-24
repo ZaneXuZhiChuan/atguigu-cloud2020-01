@@ -1,0 +1,39 @@
+server:
+  port: 8401
+
+spring:
+  application:
+    name: cloud-sentinel-service
+  datasource:
+    # 当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    # mysql驱动类
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.77.132:33306/atguigu_cloud2020?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.77.132:80 # 通过nginx反向代理 nacos集群 并集成mysql做持久化服务；
+      config:
+        server-addr: 192.168.77.132:80 # 通过nginx反向代理 nacos集群 并集成mysql做持久化服务；
+        file-extension: yaml # 指定 yml格式的配置
+#        group: DEV_GROUP
+#        namespace: 16c0da61-5901-465c-96de-ecf88492d2cd
+    sentinel:
+      transport:
+# Sentinel dashboard 地址
+        dashboard: localhost:8080
+# sentinel会启动一个http server与dashboard进行通信，这个http server要占用8719端口
+# 假如 http server 默认占用的8719端口被占用后，应用会自动从8719开始依次 +1 扫描，直到找到没被占用的端口号；
+        port: 8719
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# 加上这个配置，不然sentinel监控不到
+  endpoint:
+    sentinel:
+      enabled: true
