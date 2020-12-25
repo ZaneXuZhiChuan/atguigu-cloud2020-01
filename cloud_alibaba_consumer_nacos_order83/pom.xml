@@ -12,6 +12,11 @@
     <artifactId>cloud_alibaba_consumer_nacos_order83</artifactId>
 
     <dependencies>
+        <!--        Feign服务调用模块-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!--        openfeign 用来替代RestTemplate + Ribbon来实现RCP调用功能的模块-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

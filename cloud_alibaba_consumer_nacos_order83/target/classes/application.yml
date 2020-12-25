@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: cloud-nacos-consumer-order
+    name: cloud-nacos-feign-sentinel-consumer-order
   datasource:
     # 当前数据源操作类型
     type: com.alibaba.druid.pool.DruidDataSource
@@ -37,3 +37,7 @@ spring:
 service-url:
   nacos-user-service: http://cloud-nacos-payment-service
 
+# 激活Feign对Sentinel的支持
+feign:
+  sentinel:
+    enabled: true

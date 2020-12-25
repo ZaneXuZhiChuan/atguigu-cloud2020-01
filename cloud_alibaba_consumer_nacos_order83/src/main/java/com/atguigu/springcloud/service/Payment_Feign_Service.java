@@ -1,0 +1,14 @@
+package com.atguigu.springcloud.service;
+
+import com.atguigu.springcloud.entities.CommonResult;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@Service
+@FeignClient(value = "cloud-nacos-payment-service", fallback = Payment_Feign_Service_Fallback.class)
+public interface Payment_Feign_Service {
+    @GetMapping("/payment/get/{id}")
+    public CommonResult getPaymentById(@PathVariable("id") Long id);
+}

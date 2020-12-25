@@ -4,12 +4,14 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.Payment;
-import com.atguigu.springcloud.sertinel.fallback.MyFallBack;
+import com.atguigu.springcloud.service.Payment_Feign_Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.Resource;
 
 @RestController
 @Slf4j
@@ -20,13 +22,13 @@ public class OrderNacosController {
     String SEVER_URL;
 
     @GetMapping("/consumer/payment/nacos/{id}")
-    public String paymentInfo(@PathVariable("id")Integer id){
+    public String paymentInfo(@PathVariable("id") Integer id) {
         return restTemplate.getForObject(SEVER_URL + "/payment/nacos/" + id, String.class);
     }
 
-    //  测试 Sentinel 的服务熔断功能
+    //  测试 Ribbon + Sentinel 的服务熔断功能
     @RequestMapping("/consumer/fallback/{id}")
-    @SentinelResource(value = "fallback", fallback = "fallbackHandler",blockHandler = "blockHandler"/*,fallbackClass = MyFallBack.class*/)
+    @SentinelResource(value = "fallback", fallback = "fallbackHandler", blockHandler = "blockHandler"/*,fallbackClass = MyFallBack.class*/)
     public CommonResult<Payment> fallback(@PathVariable("id") Long id) {
         CommonResult result = restTemplate.getForObject(SEVER_URL + "/payment/get/" + id, CommonResult.class, id);
         if (id == 4) {
@@ -38,11 +40,22 @@ public class OrderNacosController {
         }
         return result;
     }
+
     public CommonResult fallbackHandler(@PathVariable Long id, Throwable throwable) {
-        return new CommonResult<>(401,"fallbackException===Sentinel的fallback处理运行时异常： fallbackHandler " + "======="+ throwable.getMessage()+"====="+id);
+        return new CommonResult<>(401, "fallbackException===Sentinel的fallback处理运行时异常： fallbackHandler " + "=======" + throwable.getMessage() + "=====" + id);
     }
 
     public CommonResult blockHandler(@PathVariable Long id, BlockException exception) {
-        return new CommonResult<>(402,"Sentinel blockHandler 限流： blockHandler " + "======="+ exception.getMessage()+"====="+id);
+        return new CommonResult<>(402, "Sentinel blockHandler 限流： blockHandler " + "=======" + exception.getMessage() + "=====" + id);
+    }
+
+    //  测试 Feign + Sentinel 的服务熔断功能
+    @Resource
+    Payment_Feign_Service paymentFeignService;
+    @RequestMapping("/consumer/feign/fallback/{id}")
+//    @SentinelResource(value = "fallback", fallback = "fallbackHandler", blockHandler = "blockHandler"/*,fallbackClass = MyFallBack.class*/)
+    public CommonResult<Payment> feignFallback(@PathVariable("id") Long id) {
+        CommonResult result = paymentFeignService.getPaymentById(id);
+        return result;
     }
 }
